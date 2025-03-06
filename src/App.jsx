@@ -19,7 +19,7 @@ const SORT_BY_ALPHABET = 'alphabetically';
 const SORT_BY_LENGTH = 'length';
 
 const sortGoods = (goods, sortType, reverse) => {
-  let sortedGoods = goods;
+  let sortedGoods = [...goods];
 
   switch (sortType) {
     case SORT_BY_ALPHABET:
@@ -52,11 +52,11 @@ export const App = () => {
     setSortReverse(false);
   };
 
-  const goods = sortGoods([...goodsFromServer], sortType, sortReverse);
-
-  const reversed = status => {
+  const reverse = status => {
     setSortReverse(!status);
   };
+
+  const goods = sortGoods([...goodsFromServer], sortType, sortReverse);
 
   return (
     <div className="section content" id="main">
@@ -73,7 +73,7 @@ export const App = () => {
 
         <button
           type="button"
-          onClick={() => setSortType('length')}
+          onClick={() => setSortType(SORT_BY_LENGTH)}
           className={`button is-success ${getButtonClass(SORT_BY_LENGTH)}`}
         >
           Sort by length
@@ -82,7 +82,7 @@ export const App = () => {
         <button
           type="button"
           onClick={() => {
-            reversed(sortReverse);
+            reverse(sortReverse);
           }}
           className={`button is-warning ${sortReverse ? '' : 'is-light'}`}
         >
